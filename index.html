@@ -1,0 +1,561 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="color-scheme" content="light dark" />
+<link rel="icon" href="data:," />
+<title>Crumb &amp; Craft — Artisan Bakery &amp; Café | WebKadai Demo</title>
+<meta name="description" content="Crumb & Craft — artisan bakery and café demo by WebKadai. Fresh sourdough, croissants, custom cakes and café drinks in Anna Nagar, Chennai. Order on WhatsApp." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme: light;
+  --bg:#FFF7ED; --bg2:#FFEDD5; --surface:#FFFFFF; --surface2:#FFF1E0;
+  --ink:#2B1A12; --muted:#7A5C4D; --line:#F3D9C2;
+  --brand:#C05A2E; --brand2:#9A3F1A; --accent:#2F5233; --gold:#D99A3D;
+  --wa:#25D366; --shadow:0 20px 50px rgba(90,45,20,.16);
+  --radius:20px;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    color-scheme: dark;
+    --bg:#1C120D; --bg2:#241812; --surface:#2A1D15; --surface2:#33241A;
+    --ink:#FFF3E6; --muted:#D8B99F; --line:#4A3426;
+    --brand:#E07A4A; --brand2:#F09A6B; --accent:#8FC49A; --gold:#E8B05C;
+    --shadow:0 20px 50px rgba(0,0,0,.45);
+  }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:"Manrope",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit}
+h1,h2,h3,.serif{font-family:"Fraunces",Georgia,serif;line-height:1.05;letter-spacing:-.02em}
+.wrap{width:min(1180px,100% - 32px);margin-inline:auto}
+@media(min-width:720px){.wrap{width:min(1180px,100% - 48px)}}
+
+/* Nav */
+header{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 0}
+.logo{display:flex;align-items:center;gap:12px;text-decoration:none;font-weight:800}
+.logo-mark{width:44px;height:44px;border-radius:12px;background:var(--brand);color:#fff;display:grid;place-items:center;font-family:"Fraunces",serif;font-size:22px;box-shadow:var(--shadow)}
+.logo small{display:block;font-weight:600;color:var(--muted);font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+.nav-links{display:none;gap:26px;font-weight:700;font-size:15px}
+.nav-links a{text-decoration:none;color:var(--muted)} .nav-links a:hover{color:var(--brand)}
+@media(min-width:860px){.nav-links{display:flex}}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;border:0;cursor:pointer;text-decoration:none;font-weight:800;border-radius:999px;padding:13px 22px;font-size:15px;transition:transform .2s,box-shadow .2s,background .2s}
+.btn:active{transform:scale(.98)}
+.btn-brand{background:var(--brand);color:#fff;box-shadow:0 12px 28px rgba(192,90,46,.35)}
+.btn-brand:hover{background:var(--brand2)}
+.btn-wa{background:var(--wa);color:#062E17}
+.btn-ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+.btn-sm{padding:10px 16px;font-size:14px}
+
+/* Hero */
+.hero{position:relative;padding:42px 0 64px;background:radial-gradient(900px 500px at 85% -10%,var(--bg2),transparent 60%),var(--bg);overflow:hidden}
+.hero-grid{display:grid;gap:36px;align-items:center}
+@media(min-width:960px){.hero-grid{grid-template-columns:1.05fr .95fr}}
+.pill{display:inline-flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:7px 13px;font-size:13px;font-weight:800;color:var(--brand2)}
+.pill i{width:8px;height:8px;border-radius:50%;background:var(--wa);display:inline-block;box-shadow:0 0 0 5px rgba(37,211,102,.18)}
+.hero h1{font-size:clamp(42px,7vw,76px);margin:18px 0 16px;font-weight:900}
+.hero h1 em{font-style:normal;color:var(--brand)}
+.hero p.lead{font-size:clamp(17px,2.4vw,20px);color:var(--muted);max-width:560px;margin:0 0 26px}
+.hero-cta{display:flex;flex-wrap:wrap;gap:12px}
+.stats{display:flex;flex-wrap:wrap;gap:14px;margin-top:30px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px 16px;min-width:132px;flex:1}
+.stat b{font-family:"Fraunces",serif;font-size:26px;display:block;line-height:1}
+.stat span{font-size:13px;color:var(--muted);font-weight:700}
+
+/* 3D stage */
+.stage{perspective:1200px}
+.tilt{position:relative;transform-style:preserve-3d;transition:transform .35s ease;will-change:transform}
+.hero-img{border-radius:28px;overflow:hidden;box-shadow:var(--shadow);border:6px solid var(--surface);aspect-ratio:1/1.02}
+.hero-img img{width:100%;height:100%;object-fit:cover}
+.float{position:absolute;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow);border-radius:16px;padding:12px 14px;transform:translateZ(55px)}
+.float b{display:block;font-size:14px;line-height:1.2}.float span{font-size:12px;color:var(--muted);font-weight:700}
+.float-1{top:18px;left:-8px}.float-2{bottom:22px;right:-6px}.float-3{bottom:-14px;left:22px}
+@media(max-width:520px){.float-1{left:6px}.float-2{right:6px}}
+@keyframes bob{0%,100%{transform:translateZ(55px) translateY(0)}50%{transform:translateZ(55px) translateY(-8px)}}
+.float{animation:bob 5s ease-in-out infinite}.float-2{animation-delay:1.2s}.float-3{animation-delay:2s}
+
+/* Marquee */
+.marquee{background:var(--ink);color:var(--bg);overflow:hidden;padding:13px 0;transform:rotate(-1deg) scale(1.02)}
+.marquee-track{display:flex;gap:34px;white-space:nowrap;width:max-content;animation:scroll 24s linear infinite;font-weight:800;letter-spacing:.02em}
+@keyframes scroll{to{transform:translateX(-50%)}}
+
+/* Sections */
+section{padding:68px 0}
+.sec-head{max-width:680px;margin-bottom:30px}
+.sec-head h2{font-size:clamp(32px,5vw,48px);margin:10px 0 10px}
+.sec-head p{color:var(--muted);margin:0;font-size:17px}
+.kicker{font-size:13px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--brand)}
+
+.cards{display:grid;gap:18px}
+@media(min-width:720px){.cards{grid-template-columns:repeat(3,1fr)}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:0 10px 30px rgba(90,45,20,.07)}
+.card .ph{aspect-ratio:16/10;overflow:hidden}.card .ph img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
+.card:hover .ph img{transform:scale(1.06)}
+.card-body{padding:20px}
+.card-body h3{margin:0 0 6px;font-size:22px}.card-body p{color:var(--muted);margin:0 0 14px;font-size:15px}
+.price-row{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.price{font-weight:800;font-size:18px}.price small{color:var(--muted);font-weight:600;font-size:13px}
+
+/* Menu */
+.tabs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:22px}
+.tab{border:1.5px solid var(--line);background:var(--surface);color:var(--ink);padding:11px 18px;border-radius:999px;font-weight:800;cursor:pointer;font-size:14px}
+.tab.active{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.menu-grid{display:grid;gap:14px}
+@media(min-width:680px){.menu-grid{grid-template-columns:1fr 1fr}}
+@media(min-width:1020px){.menu-grid{grid-template-columns:1fr 1fr 1fr}}
+.item{display:flex;gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px;align-items:flex-start}
+.item-main{flex:1;min-width:0}
+.item h3{margin:0 0 4px;font-size:17px;font-family:"Manrope",sans-serif;font-weight:800;letter-spacing:0}
+.item p{margin:0;color:var(--muted);font-size:13.5px;line-height:1.45}
+.badges{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px}
+.badge{font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:4px 8px;border-radius:999px;background:var(--surface2);color:var(--brand2);border:1px solid var(--line)}
+.badge.veg{color:var(--accent)}
+.item-foot{display:flex;align-items:center;justify-content:space-between;margin-top:12px;gap:10px}
+.add-btn{background:var(--brand);color:#fff;border:0;border-radius:999px;padding:9px 16px;font-weight:800;cursor:pointer;font-size:14px;white-space:nowrap}
+.add-btn:hover{background:var(--brand2)}
+
+/* Steps / story */
+.split{display:grid;gap:28px;align-items:center}
+@media(min-width:900px){.split{grid-template-columns:1fr 1fr}}
+.steps{display:grid;gap:14px}
+.step{display:flex;gap:16px;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:18px}
+.step-num{width:46px;height:46px;flex:0 0 46px;border-radius:50%;background:var(--surface2);border:1px solid var(--line);display:grid;place-items:center;font-family:"Fraunces",serif;font-weight:900;color:var(--brand);font-size:20px}
+.step h3{margin:2px 0 4px;font-size:18px}.step p{margin:0;color:var(--muted);font-size:14.5px}
+.round-img{border-radius:26px;overflow:hidden;box-shadow:var(--shadow);aspect-ratio:4/3}
+.round-img img{width:100%;height:100%;object-fit:cover}
+
+/* Reviews */
+.review{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:24px}
+.stars{color:var(--gold);letter-spacing:2px;font-size:18px}
+.review p{font-size:17px;margin:12px 0}.review b{font-size:14px}.review span{color:var(--muted);font-size:13px;font-weight:700}
+
+/* Tray */
+.tray-bar{position:fixed;left:50%;transform:translateX(-50%);bottom:18px;z-index:60;width:min(680px,calc(100% - 24px));background:var(--ink);color:var(--bg);border-radius:18px;padding:14px 16px;display:none;align-items:center;justify-content:space-between;gap:14px;box-shadow:0 24px 50px rgba(0,0,0,.3)}
+.tray-bar.show{display:flex}
+.tray-bar b{font-size:16px}.tray-bar span{opacity:.85;font-size:13px;display:block}
+.sheet{position:fixed;inset:0;z-index:80;display:none}
+.sheet.open{display:block}
+.sheet-bg{position:absolute;inset:0;background:rgba(20,10,5,.55);backdrop-filter:blur(3px)}
+.sheet-panel{position:absolute;left:50%;transform:translateX(-50%);bottom:0;width:min(680px,100%);max-height:86vh;overflow:auto;background:var(--surface);border-radius:26px 26px 0 0;padding:24px 20px 28px;box-shadow:var(--shadow)}
+@media(min-width:720px){.sheet-panel{bottom:24px;border-radius:26px}}
+.sheet-panel h2{margin:0 0 6px;font-size:28px}
+.tray-item{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 0;border-bottom:1px solid var(--line)}
+.qty{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:999px;padding:4px}
+.qty button{width:30px;height:30px;border-radius:50%;border:0;background:var(--surface2);cursor:pointer;font-weight:900;color:var(--ink)}
+.field{display:grid;gap:7px;margin-top:14px}
+.field label{font-size:13px;font-weight:800}
+.field input,.field select,.field textarea{width:100%;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);border-radius:12px;padding:12px 13px;font:inherit}
+.total-row{display:flex;justify-content:space-between;font-weight:800;font-size:18px;padding:16px 0 6px}
+.empty{color:var(--muted);text-align:center;padding:26px 0}
+.toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--bg);padding:12px 18px;border-radius:999px;font-weight:800;z-index:90;opacity:0;pointer-events:none;transition:.3s}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* Reveal */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+  .reveal{opacity:1;transform:none}
+}
+footer{background:var(--ink);color:var(--bg);padding:52px 0 110px;margin-top:20px}
+footer p{opacity:.82}
+.foot-grid{display:grid;gap:26px}
+@media(min-width:800px){.foot-grid{grid-template-columns:1.3fr 1fr 1fr}}
+footer a{color:var(--bg)}
+.demo-note{font-size:13px;opacity:.75;border-top:1px solid rgba(255,255,255,.18);padding-top:16px;margin-top:24px}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="#top" aria-label="Crumb and Craft home">
+      <span class="logo-mark">C</span>
+      <span>Crumb &amp; Craft<small>Artisan Bakery • Anna Nagar</small></span>
+    </a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="#bestsellers">Bestsellers</a><a href="#menu">Menu</a><a href="#custom">Custom Cakes</a><a href="#visit">Visit Us</a>
+    </nav>
+    <a class="btn btn-wa btn-sm" href="https://wa.me/919876543210?text=Hi%20Crumb%20%26%20Craft!%20I%20want%20to%20order." target="_blank" rel="noopener">Order on WhatsApp</a>
+  </div>
+</header>
+
+<main id="top">
+  <!-- HERO -->
+  <section class="hero" style="padding-top:38px">
+    <div class="wrap hero-grid">
+      <div class="reveal in">
+        <span class="pill"><i></i> Baking fresh now • Anna Nagar, Chennai</span>
+        <h1>Bread at dawn.<br><em>Cakes that stop</em><br>the scroll.</h1>
+        <p class="lead">Small-batch sourdough, 27-layer croissants and custom celebration cakes — baked through the night, ready when the city wakes up.</p>
+        <div class="hero-cta">
+          <a class="btn btn-brand" href="#menu">Browse the menu</a>
+          <a class="btn btn-ghost" href="#custom">Design a custom cake</a>
+        </div>
+        <div class="stats">
+          <div class="stat"><b>4.9★</b><span>2,400+ Google reviews</span></div>
+          <div class="stat"><b>120+</b><span>bakes every morning</span></div>
+          <div class="stat"><b>45 min</b><span>avg. WhatsApp delivery*</span></div>
+        </div>
+      </div>
+      <div class="stage reveal in">
+        <div class="tilt" id="tiltCard">
+          <div class="hero-img"><img src="assets/hero-cake.jpg" alt="Chocolate truffle layer cake with glossy ganache, berries and gold dust on a cake stand" fetchpriority="high"></div>
+          <div class="float float-1"><b>Belgian Truffle Cake</b><span>₹649 • Bestseller</span></div>
+          <div class="float float-2"><b>Baked at 5:40 AM</b><span>Still warm in store</span></div>
+          <div class="float float-3"><b>Eggless options</b><span>40+ recipes daily</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="marquee" aria-hidden="true"><div class="marquee-track" id="marqueeTrack"></div></div>
+
+  <!-- BESTSELLERS -->
+  <section id="bestsellers">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="kicker">Today's counter</div>
+        <h2>The three everyone comes for</h2>
+        <p>Our ovens run in small batches all day — when a batch sells out, the next one is already proofing.</p>
+      </div>
+      <div class="cards">
+        <article class="card">
+          <div class="ph"><img src="assets/croissant.jpg" alt="Golden flaky butter croissants steaming on a wooden board" loading="lazy"></div>
+          <div class="card-body"><h3>Butter Croissant</h3><p>27 laminated layers, French butter, baked twice daily at 7 AM and 4 PM.</p>
+          <div class="price-row"><span class="price">₹99 <small>/ piece</small></span><button class="add-btn" data-add="Butter Croissant" data-price="99">Add +</button></div></div>
+        </article>
+        <article class="card">
+          <div class="ph"><img src="assets/sourdough.jpg" alt="Artisan sourdough loaves with scored crusts on linen in the bakery" loading="lazy"></div>
+          <div class="card-body"><h3>Country Sourdough</h3><p>48-hour ferment, stone-milled wheat, crackling crust. Sells out by noon most days.</p>
+          <div class="price-row"><span class="price">₹249 <small>/ 800g loaf</small></span><button class="add-btn" data-add="Country Sourdough (800g)" data-price="249">Add +</button></div></div>
+        </article>
+        <article class="card">
+          <div class="ph"><img src="assets/hero-cake.jpg" alt="Belgian chocolate truffle cake topped with fresh berries" loading="lazy"></div>
+          <div class="card-body"><h3>Belgian Truffle Cake</h3><p>Three layers of dark chocolate sponge, ganache drip and fresh berries. Our #1 cake.</p>
+          <div class="price-row"><span class="price">₹649 <small>/ 500g</small></span><button class="add-btn" data-add="Belgian Truffle Cake (500g)" data-price="649">Add +</button></div></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- MENU -->
+  <section id="menu" style="background:var(--bg2);border-block:1px solid var(--line)">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="kicker">Full menu</div>
+        <h2>Add to your tray, order on WhatsApp</h2>
+        <p>Tap a category, add what you love, and send the whole tray to us in one WhatsApp message. Pay on pickup or delivery.</p>
+      </div>
+      <div class="tabs" role="tablist" aria-label="Menu categories" id="tabs"></div>
+      <div class="menu-grid" id="menuGrid"></div>
+      <p style="color:var(--muted);font-size:13px;margin-top:16px">*Delivery within 5 km of Anna Nagar. Prices include GST. Menu changes daily with the bake — WhatsApp us for today's specials.</p>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS + INTERIOR -->
+  <section>
+    <div class="wrap split">
+      <div class="reveal">
+        <div class="kicker">From our oven</div>
+        <h2 style="font-size:clamp(30px,4.5vw,44px);margin:10px 0 18px">Slow mornings,<br>serious baking</h2>
+        <div class="steps">
+          <div class="step"><div class="step-num">1</div><div><h3>Proofed overnight</h3><p>Our starters are fed at 9 PM and doughs proof for 12–48 hours. No shortcuts, no frozen bases.</p></div></div>
+          <div class="step"><div class="step-num">2</div><div><h3>Baked in small batches</h3><p>Croissants at 7 AM, sourdough at 8, cakes through the day — so the counter is never stale.</p></div></div>
+          <div class="step"><div class="step-num">3</div><div><h3>At your door, still warm</h3><p>Order on WhatsApp and we deliver within Anna Nagar, Kilpaak and Mogappair in about 45 minutes.</p></div></div>
+        </div>
+      </div>
+      <div class="round-img reveal"><img src="assets/interior.jpg" alt="Inside Crumb and Craft bakery café — pastry display counter, wooden shelves and marble café tables" loading="lazy"></div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head reveal"><div class="kicker">Word on the street</div><h2>Anna Nagar loves us back</h2></div>
+      <div class="cards" id="reviews"></div>
+    </div>
+  </section>
+
+  <!-- CUSTOM CAKE -->
+  <section id="custom" style="background:var(--ink);color:var(--bg)">
+    <div class="wrap split">
+      <div class="reveal">
+        <div class="kicker" style="color:var(--gold)">Custom cakes</div>
+        <h2 style="font-size:clamp(30px,4.5vw,44px);margin:10px 0 12px">Tell us the occasion.<br>We'll bake the story.</h2>
+        <p style="opacity:.85;max-width:520px">Birthdays, weddings, baby showers, office parties — send us a reference photo or just an idea, and our cake studio replies with a design and quote on WhatsApp within 2 hours.</p>
+        <ul style="line-height:2;padding-left:18px;opacity:.9">
+          <li>Photo cakes, 3D sculpted cakes &amp; tiered wedding cakes</li>
+          <li>Eggless, vegan and sugar-free options</li>
+          <li>Order 48 hours ahead • Rush orders on WhatsApp</li>
+        </ul>
+      </div>
+      <form class="reveal" id="cakeForm" style="background:var(--surface);color:var(--ink);border-radius:22px;padding:24px">
+        <h3 style="margin:0 0 4px;font-size:24px">Get a free design quote</h3>
+        <p style="color:var(--muted);margin:0 0 8px;font-size:14px">Fill this in — it opens WhatsApp with your details ready to send.</p>
+        <div class="field"><label for="fOccasion">Occasion</label>
+          <select id="fOccasion"><option>Birthday</option><option>Wedding / Engagement</option><option>Anniversary</option><option>Baby shower</option><option>Office / Corporate</option><option>Other celebration</option></select></div>
+        <div class="field"><label for="fDate">Needed by</label><input id="fDate" type="date" required></div>
+        <div class="field"><label for="fIdea">Your idea (flavour, size, theme…)</label><textarea id="fIdea" rows="3" placeholder="e.g. 1 kg chocolate cake, jungle theme, name 'Aisha' on top"></textarea></div>
+        <button class="btn btn-wa" type="submit" style="width:100%;margin-top:18px">Send on WhatsApp →</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- VISIT -->
+  <section id="visit">
+    <div class="wrap">
+      <div class="sec-head reveal"><div class="kicker">Visit us</div><h2>Come smell the oven</h2></div>
+      <div class="cards">
+        <div class="card"><div class="card-body"><h3>📍 Find us</h3><p>14, 2nd Avenue, Anna Nagar,<br>Chennai — 600 040<br><br><a href="https://www.google.com/maps/search/?api=1&query=Anna+Nagar+Chennai" target="_blank" rel="noopener" style="color:var(--brand);font-weight:800">Open in Google Maps →</a></p></div></div>
+        <div class="card"><div class="card-body"><h3>🕗 Hours</h3><p>Mon – Fri: 7:30 AM – 10 PM<br>Sat – Sun: 7:30 AM – 11 PM<br><br>Fresh croissants: 7 AM &amp; 4 PM<br>Sourdough: 8 AM (till sold out)</p></div></div>
+        <div class="card"><div class="card-body"><h3>📞 Talk to us</h3><p>Orders &amp; custom cakes:<br><a href="https://wa.me/919876543210" target="_blank" rel="noopener" style="color:var(--brand);font-weight:800">WhatsApp +91 98765 43210</a><br><br>Café seating: 24 covers<br>Free Wi-Fi • Pet-friendly porch</p></div></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div><h3 style="margin:0 0 8px;font-size:26px">Crumb &amp; Craft</h3><p>Artisan bakery &amp; café in Anna Nagar, Chennai. Baked at dawn, gone by dusk.</p></div>
+      <div><b>Explore</b><p><a href="#bestsellers">Bestsellers</a><br><a href="#menu">Full menu</a><br><a href="#custom">Custom cakes</a></p></div>
+      <div><b>Order</b><p><a href="https://wa.me/919876543210" target="_blank" rel="noopener">WhatsApp us</a><br>Delivery: Anna Nagar, Kilpaak, Mogappair</p></div>
+    </div>
+    <p class="demo-note">Demo website crafted by WebKadai for local bakeries &amp; cafés. Crumb &amp; Craft is a fictional demo brand — menu, prices and reviews are sample content. Your bakery's real site can look exactly like this.</p>
+  </div>
+</footer>
+
+<!-- Tray bar -->
+<div class="tray-bar" id="trayBar" role="button" tabindex="0" aria-label="Open your order tray">
+  <div><b id="traySummary">0 items</b><span>Tap to review &amp; order</span></div>
+  <div style="text-align:right"><b id="trayTotal">₹0</b><span>Order →</span></div>
+</div>
+
+<!-- Tray sheet -->
+<div class="sheet" id="sheet" aria-hidden="true">
+  <div class="sheet-bg" id="sheetBg"></div>
+  <div class="sheet-panel" role="dialog" aria-label="Your order tray">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
+      <h2>Your tray</h2>
+      <button class="btn btn-ghost btn-sm" id="closeSheet">Close ✕</button>
+    </div>
+    <p style="color:var(--muted);margin:0 0 8px;font-size:14px">Review your items — then send the order to our WhatsApp in one tap.</p>
+    <div id="trayItems"></div>
+    <div class="total-row"><span>Total</span><span id="sheetTotal">₹0</span></div>
+    <div class="field"><label for="custName">Your name</label><input id="custName" placeholder="e.g. Priya Sharma" autocomplete="name"></div>
+    <div class="field"><label for="custNote">Note (optional)</label><input id="custNote" placeholder="e.g. Less sweet, pick up at 6 PM"></div>
+    <button class="btn btn-wa" id="waOrder" style="width:100%;margin-top:18px">Place order on WhatsApp →</button>
+    <button class="btn btn-ghost" id="clearTray" style="width:100%;margin-top:10px">Clear tray</button>
+  </div>
+</div>
+
+<div class="toast" id="toast">Added to tray ✓</div>
+
+<script>
+(function(){
+  "use strict";
+  var WA = "919876543210";
+  var inr = function(n){ return "₹" + n.toLocaleString("en-IN"); };
+
+  /* Marquee */
+  var words = ["Fresh Sourdough Daily","27-Layer Croissants","Custom Cakes in 48 hrs","Eggless & Vegan Options","Baked at Dawn","Anna Nagar • Chennai"];
+  var track = document.getElementById("marqueeTrack");
+  var seq = words.map(function(w){return "<span>✦&nbsp;&nbsp;"+w+"</span>";}).join("");
+  track.innerHTML = seq + seq;
+
+  /* Menu data */
+  var MENU = [
+    {cat:"Cakes", name:"Belgian Truffle Cake", desc:"Dark chocolate layers, ganache drip, fresh berries. 500g / 1kg.", price:649, tag:"Bestseller", veg:false},
+    {cat:"Cakes", name:"Classic Red Velvet", desc:"Cream-cheese frosting, cocoa-kissed sponge. 500g / 1kg.", price:599, tag:"", veg:false},
+    {cat:"Cakes", name:"Mango Passion Cake", desc:"Seasonal alphonso mangoes, passionfruit glaze. 500g.", price:699, tag:"Seasonal", veg:true},
+    {cat:"Cakes", name:"Eggless Butterscotch", desc:"Crunchy praline, butterscotch cream, caramel drip. 500g.", price:549, tag:"Eggless", veg:true},
+    {cat:"Cakes", name:"Pistachio Rose Cake", desc:"Pistachio sponge, rose cream, toasted nuts. 500g.", price:749, tag:"New", veg:true},
+    {cat:"Cakes", name:"Biscoff Cheesecake", desc:"Baked cheesecake on a Biscoff biscuit base. 500g.", price:799, tag:"", veg:false},
+    {cat:"Breads & Croissants", name:"Butter Croissant", desc:"27 laminated layers, French butter. Baked 7 AM & 4 PM.", price:99, tag:"Bestseller", veg:true},
+    {cat:"Breads & Croissants", name:"Country Sourdough", desc:"48-hour ferment, stone-milled wheat. 800g loaf.", price:249, tag:"Bestseller", veg:true},
+    {cat:"Breads & Croissants", name:"Almond Croissant", desc:"Double-baked, almond frangipane, flaked almonds.", price:149, tag:"", veg:true},
+    {cat:"Breads & Croissants", name:"Garlic Herb Focaccia", desc:"Olive oil, rosemary, roasted garlic. 400g slab.", price:179, tag:"", veg:true},
+    {cat:"Breads & Croissants", name:"Multigrain Loaf", desc:"7 grains & seeds, honey-kissed crumb. 600g.", price:189, tag:"Healthy", veg:true},
+    {cat:"Breads & Croissants", name:"Chocolate Babka", desc:"Braided brioche swirled with dark chocolate. 450g.", price:229, tag:"New", veg:true},
+    {cat:"Pastries & Desserts", name:"Tiramisu Cup", desc:"Espresso-soaked savoiardi, mascarpone cloud. Single serve.", price:199, tag:"", veg:false},
+    {cat:"Pastries & Desserts", name:"Berry Danish", desc:"Flaky pastry, vanilla custard, glazed seasonal berries.", price:129, tag:"", veg:true},
+    {cat:"Pastries & Desserts", name:"Fudge Brownie", desc:"70% dark chocolate, walnut crunch, sea-salt finish.", price:119, tag:"Bestseller", veg:true},
+    {cat:"Pastries & Desserts", name:"Lemon Tart", desc:"Torched meringue, sharp lemon curd, butter crust.", price:159, tag:"", veg:true},
+    {cat:"Pastries & Desserts", name:"Macarons (Box of 6)", desc:"Assorted: rose, pistachio, salted caramel, chocolate…", price:349, tag:"Gift pick", veg:true},
+    {cat:"Pastries & Desserts", name:"Cinnamon Roll", desc:"Brioche swirl, cinnamon butter, cream glaze.", price:139, tag:"", veg:true},
+    {cat:"Café & Drinks", name:"Filter Coffee", desc:"Slow-dripped Peaberry blend, frothed milk, jaggery option.", price:79, tag:"South Indian", veg:true},
+    {cat:"Café & Drinks", name:"Cappuccino", desc:"Double-shot espresso, velvety micro-foam, cocoa dust.", price:149, tag:"", veg:true},
+    {cat:"Café & Drinks", name:"Cold Brew Tonic", desc:"18-hour cold brew over tonic, orange peel.", price:199, tag:"New", veg:true},
+    {cat:"Café & Drinks", name:"Masala Chai", desc:"Crushed ginger, cardamom, Assam leaves, full-cream milk.", price:89, tag:"", veg:true},
+    {cat:"Café & Drinks", name:"Hot Chocolate", desc:"Real couverture chocolate, steamed milk, marshmallow.", price:179, tag:"Kids love it", veg:true},
+    {cat:"Café & Drinks", name:"Berry Smoothie", desc:"Mixed berries, banana, yogurt, honey. No added sugar option.", price:169, tag:"Healthy", veg:true}
+  ];
+  var CATS = ["All","Cakes","Breads & Croissants","Pastries & Desserts","Café & Drinks"];
+  var tabsEl = document.getElementById("tabs");
+  var gridEl = document.getElementById("menuGrid");
+  var activeCat = "All";
+
+  CATS.forEach(function(c){
+    var b = document.createElement("button");
+    b.className = "tab" + (c==="All" ? " active" : "");
+    b.textContent = c; b.setAttribute("role","tab");
+    b.addEventListener("click", function(){
+      activeCat = c;
+      tabsEl.querySelectorAll(".tab").forEach(function(t){ t.classList.remove("active"); });
+      b.classList.add("active"); renderMenu();
+    });
+    tabsEl.appendChild(b);
+  });
+
+  function renderMenu(){
+    gridEl.innerHTML = "";
+    MENU.filter(function(m){ return activeCat==="All" || m.cat===activeCat; }).forEach(function(m){
+      var el = document.createElement("article"); el.className = "item reveal in";
+      var badges = "";
+      if(m.tag) badges += '<span class="badge">'+m.tag+"</span>";
+      badges += m.veg ? '<span class="badge veg">● Veg</span>' : '<span class="badge">Contains egg</span>';
+      el.innerHTML = '<div class="item-main"><div class="badges">'+badges+'</div><h3></h3><p></p>'+
+        '<div class="item-foot"><span class="price">'+inr(m.price)+'</span>'+
+        '<button class="add-btn" type="button">Add +</button></div></div>';
+      el.querySelector("h3").textContent = m.name;
+      el.querySelector("p").textContent = m.desc;
+      el.querySelector(".add-btn").addEventListener("click", function(){ addToTray(m.name, m.price); });
+      gridEl.appendChild(el);
+    });
+  }
+  renderMenu();
+
+  /* Reviews */
+  var REVIEWS = [
+    {n:"Priya Raghavan", a:"Anna Nagar", t:"The sourdough sells out by 10 AM and now I know why. I pre-order on WhatsApp every Friday — warm loaf at my door by 9.", s:5},
+    {n:"Arun Prakash", a:"Kilpaak", t:"Ordered my daughter's unicorn cake here. They sent design options on WhatsApp in an hour and it looked better than the reference photo.", s:5},
+    {n:"Meera & Karthik", a:"Mogappair", t:"Our weekend ritual: croissants and filter coffee on their porch. Tastes like a Paris café, priced like a neighbourhood bakery.", s:5}
+  ];
+  var revEl = document.getElementById("reviews");
+  REVIEWS.forEach(function(r){
+    var d = document.createElement("article"); d.className = "review";
+    d.innerHTML = '<div class="stars">'+"★★★★★".slice(0,r.s)+'</div><p></p><b></b><br><span></span>';
+    d.querySelector("p").textContent = "“" + r.t + "”";
+    d.querySelector("b").textContent = r.n; d.querySelector("span").textContent = r.a + " • Google review";
+    revEl.appendChild(d);
+  });
+
+  /* Tray */
+  var tray = {}; // name -> {price, qty}
+  var trayBar = document.getElementById("trayBar");
+  var sheet = document.getElementById("sheet");
+  var toast = document.getElementById("toast");
+  var toastTimer = null;
+
+  function showToast(msg){
+    toast.textContent = msg; toast.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ toast.classList.remove("show"); }, 1800);
+  }
+  function trayTotals(){
+    var count = 0, total = 0;
+    Object.keys(tray).forEach(function(k){ count += tray[k].qty; total += tray[k].qty * tray[k].price; });
+    return {count:count, total:total};
+  }
+  function renderTray(){
+    var t = trayTotals();
+    trayBar.classList.toggle("show", t.count > 0);
+    document.getElementById("traySummary").textContent = t.count + (t.count===1 ? " item" : " items");
+    document.getElementById("trayTotal").textContent = inr(t.total);
+    document.getElementById("sheetTotal").textContent = inr(t.total);
+    var box = document.getElementById("trayItems"); box.innerHTML = "";
+    var keys = Object.keys(tray);
+    if(!keys.length){ box.innerHTML = '<div class="empty">Your tray is empty — add something delicious from the menu.</div>'; return; }
+    keys.forEach(function(name){
+      var it = tray[name];
+      var row = document.createElement("div"); row.className = "tray-item";
+      row.innerHTML = '<div style="flex:1;min-width:0"><b style="font-size:15px"></b><br><span style="color:var(--muted);font-size:13px;font-weight:700"></span></div>';
+      row.querySelector("b").textContent = name;
+      row.querySelector("span").textContent = inr(it.price) + " each";
+      var qty = document.createElement("div"); qty.className = "qty";
+      var minus = document.createElement("button"); minus.textContent = "−"; minus.setAttribute("aria-label","Decrease quantity");
+      var num = document.createElement("b"); num.textContent = it.qty; num.style.minWidth = "18px"; num.style.textAlign = "center";
+      var plus = document.createElement("button"); plus.textContent = "+"; plus.setAttribute("aria-label","Increase quantity");
+      minus.addEventListener("click", function(){ it.qty--; if(it.qty<=0) delete tray[name]; renderTray(); });
+      plus.addEventListener("click", function(){ it.qty++; renderTray(); });
+      qty.appendChild(minus); qty.appendChild(num); qty.appendChild(plus);
+      var line = document.createElement("b"); line.textContent = inr(it.price * it.qty); line.style.minWidth = "64px"; line.style.textAlign = "right";
+      row.appendChild(qty); row.appendChild(line); box.appendChild(row);
+    });
+  }
+  function addToTray(name, price){
+    if(tray[name]) tray[name].qty++; else tray[name] = {price:price, qty:1};
+    renderTray(); showToast("Added: " + name + " ✓");
+  }
+  document.querySelectorAll("[data-add]").forEach(function(btn){
+    btn.addEventListener("click", function(){ addToTray(btn.getAttribute("data-add"), parseInt(btn.getAttribute("data-price"),10)); });
+  });
+
+  function openSheet(){ sheet.classList.add("open"); sheet.setAttribute("aria-hidden","false"); }
+  function closeSheet(){ sheet.classList.remove("open"); sheet.setAttribute("aria-hidden","true"); }
+  trayBar.addEventListener("click", openSheet);
+  trayBar.addEventListener("keydown", function(e){ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); openSheet(); } });
+  document.getElementById("closeSheet").addEventListener("click", closeSheet);
+  document.getElementById("sheetBg").addEventListener("click", closeSheet);
+  document.addEventListener("keydown", function(e){ if(e.key==="Escape") closeSheet(); });
+  document.getElementById("clearTray").addEventListener("click", function(){ tray = {}; renderTray(); showToast("Tray cleared"); });
+
+  document.getElementById("waOrder").addEventListener("click", function(){
+    var t = trayTotals();
+    if(!t.count){ showToast("Your tray is empty"); return; }
+    var name = document.getElementById("custName").value.trim();
+    var note = document.getElementById("custNote").value.trim();
+    var lines = ["Hi Crumb & Craft! I'd like to order:", ""];
+    Object.keys(tray).forEach(function(k){ lines.push("• " + k + " × " + tray[k].qty + " — " + inr(tray[k].price * tray[k].qty)); });
+    lines.push("", "Total: " + inr(t.total));
+    if(name) lines.push("Name: " + name);
+    if(note) lines.push("Note: " + note);
+    window.open("https://wa.me/" + WA + "?text=" + encodeURIComponent(lines.join("\n")), "_blank", "noopener");
+  });
+
+  /* Custom cake form -> WhatsApp */
+  document.getElementById("cakeForm").addEventListener("submit", function(e){
+    e.preventDefault();
+    var occ = document.getElementById("fOccasion").value;
+    var date = document.getElementById("fDate").value;
+    var idea = document.getElementById("fIdea").value.trim();
+    var msg = "Hi Crumb & Craft! I want a custom cake quote.\n\nOccasion: " + occ + (date ? "\nNeeded by: " + date : "") + (idea ? "\nIdea: " + idea : "") + "\n\nPlease share design options. Thanks!";
+    window.open("https://wa.me/" + WA + "?text=" + encodeURIComponent(msg), "_blank", "noopener");
+  });
+  var dateInput = document.getElementById("fDate");
+  if(dateInput){ var today = new Date(); today.setDate(today.getDate()+2); dateInput.min = today.toISOString().split("T")[0]; }
+
+  /* 3D tilt */
+  var card = document.getElementById("tiltCard");
+  var fine = window.matchMedia("(pointer: fine)").matches;
+  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if(card && fine && !reduced){
+    var stage = card.parentElement;
+    stage.addEventListener("mousemove", function(e){
+      var r = card.getBoundingClientRect();
+      var x = (e.clientX - r.left) / r.width - 0.5;
+      var y = (e.clientY - r.top) / r.height - 0.5;
+      card.style.transform = "rotateY(" + (x*14) + "deg) rotateX(" + (-y*12) + "deg)";
+    });
+    stage.addEventListener("mouseleave", function(){ card.style.transform = "rotateY(0deg) rotateX(0deg)"; });
+  }
+
+  /* Scroll reveal */
+  var io = ("IntersectionObserver" in window) ? new IntersectionObserver(function(entries){
+    entries.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add("in"); io.unobserve(en.target); } });
+  }, {threshold: 0.12}) : null;
+  document.querySelectorAll(".reveal").forEach(function(el){ if(io) io.observe(el); else el.classList.add("in"); });
+
+  renderTray();
+})();
+</script>
+</body>
+</html>
